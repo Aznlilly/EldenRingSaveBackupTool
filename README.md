@@ -12,3 +12,5 @@ The tool settings can be modified by editing the EldenRingSaveBackupTool.ps1 fil
 
 
 ## Release
+
+https://github.com/Aznlilly/EldenRingSaveBackupTool/releases/tag/InitialRelease
