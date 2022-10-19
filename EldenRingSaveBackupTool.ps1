@@ -25,8 +25,8 @@ $Multyple_Directory = $false
 
 #Change $Directory to select the only one you need, this mod actualy crash/dont work if you do have more the 1 directory at C:\Users\<...>\AppData\Roaming\EldenRing
 
-$Directory = "\"
-# example $Directory = "\76561198246504570" !Note use the \before the directory name
+$Directory = ""
+# example $Directory = "76561198246504570"
 
 #Don't change below code
 ###################################################################
@@ -37,14 +37,15 @@ $erBasePath = Join-Path -Path $env:APPDATA -ChildPath "\EldenRing"
 if($Multyple_Directory){
 	
 	<# Force directory#>
-	$userID = Get-ChildItem -Path (Join-Path -Path $erBasePath -ChildPath $Directory ) -Name -Directory 
 	Write-Host "Forced directory selected."
+	$userID = Get-ChildItem -Path $erBasePath -Name -Directory -Filter $Directory
 	
 }else {
 	
 	<# Auto directory#>
-	$userID = Get-ChildItem -Path $erBasePath -Name -Directory
 	Write-Host "Automatic directory selected."
+	$userID = Get-ChildItem -Path $erBasePath -Name -Directory
+	
 }
 
 $erSavePath = Join-Path -Path $erBasePath -ChildPath $userID
