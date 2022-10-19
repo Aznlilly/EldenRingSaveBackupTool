@@ -18,13 +18,35 @@ $backupSeamlessCoop = $true
 
 $backupVanilla = $true
 
+#Change if does crash or give errors about "$erSavePath = Join-Path -Path $erBasePath -ChildPath $userID"
+
+$Multyple_Directory = $false
+#After change the $Directory
+
+#Change $Directory to select the only one you need, this mod actualy crash/dont work if you do have more the 1 directory at C:\Users\<...>\AppData\Roaming\EldenRing
+
+$Directory = "\"
+# example $Directory = "\76561198246504570" !Note use the \before the directory name
 
 #Don't change below code
 ###################################################################
 
 $delaySeconds = $delayMinutesBetweenBackups * 60
 $erBasePath = Join-Path -Path $env:APPDATA -ChildPath "\EldenRing"
-$userID = Get-ChildItem -Path $erBasePath -Name -Directory
+
+if($Multyple_Directory){
+	
+	<# Force directory#>
+	$userID = Get-ChildItem -Path (Join-Path -Path $erBasePath -ChildPath $Directory ) -Name -Directory 
+	Write-Host "Forced directory selected."
+	
+}else {
+	
+	<# Auto directory#>
+	$userID = Get-ChildItem -Path $erBasePath -Name -Directory
+	Write-Host "Automatic directory selected."
+}
+
 $erSavePath = Join-Path -Path $erBasePath -ChildPath $userID
 $deletePathSeamless = [IO.Path]::Combine($backupDirectory, '*\', '*.co2')
 $deletePathVanilla = [IO.Path]::Combine($backupDirectory, '*\', '*.sl2')
