@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="Elden Ring Save Backup Tool" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="Elden Ring Save Backup Tool" 
+           UpgradeCode="7c7f0247-8b4c-4916-8e22-e665b9f5e60d">
+    
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perUser" 
+             Description="Elden Ring Save File Backup Tool with Multi-Language Support" />
+
+    <!-- Icon definition -->
+    <Icon Id="AppIcon" SourceFile="er.ico" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Directory Structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="INSTALLFOLDER" Name="EldenRingSaveBackup">
+          <Component Id="MainExecutable" Guid="12345678-1234-5678-9ABC-123456789ABC">
+            <File Id="EldenRingSaveBackupPS1" 
+                  Source="EldenRingSaveBackup.ps1" />
+            <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="MainExecutable" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+          <Component Id="ConfigFiles" Guid="12345678-1234-5678-9ABC-123456789ABD">
+            <File Id="ConfigExample" 
+                  Source="config.example.json" />
+            <File Id="Languages" 
+                  Source="languages.json" />
+            <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="ConfigFiles" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+          <Component Id="AppFiles" Guid="12345678-1234-5678-9ABC-123456789ABE">
+            <File Id="AppIcon" 
+                  Source="er.ico" />
+            <File Id="StartBatch" 
+                  Source="StartEldenRingBackup.bat" />
+            <File Id="StartConsoleBatch" 
+                  Source="StartEldenRingBackup-Console.bat" />
+            <File Id="StartVBS" 
+                  Source="StartEldenRingBackup.vbs" />
+            <File Id="Manifest" 
+                  Source="EldenRingSaveBackup.exe.manifest" />
+            <File Id="Readme" 
+                  Source="README.md" />
+            <RemoveFolder Id="INSTALLFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="AppFiles" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+      
+      <!-- Desktop Shortcut -->
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="DesktopShortcut" Guid="12345678-1234-5678-9ABC-123456789AC2">
+          <Shortcut Id="DesktopShortcut" 
+                    Directory="DesktopFolder" 
+                    Name="Elden Ring Save Backup" 
+                    Target="[INSTALLFOLDER]StartEldenRingBackup.bat"
+                    WorkingDirectory="INSTALLFOLDER" 
+                    Icon="AppIcon" 
+                    IconIndex="0" />
+          <RemoveFolder Id="DesktopShortcut" On="uninstall" />
+          <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+      </Directory>
+      
+      <!-- Start Menu -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="Elden Ring Save Backup">
+          <Component Id="ProgramMenuDir" Guid="12345678-1234-5678-9ABC-123456789AC3">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="ProgramMenuDir" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Start Menu Shortcut -->
+    <DirectoryRef Id="ProgramMenuDir">
+      <Component Id="StartMenuShortcut" Guid="12345678-1234-5678-9ABC-123456789AC4">
+        <Shortcut Id="StartMenuShortcut" 
+                  Directory="ProgramMenuDir" 
+                  Name="Elden Ring Save Backup" 
+                  Target="[INSTALLFOLDER]StartEldenRingBackup.bat"
+                  WorkingDirectory="INSTALLFOLDER" 
+                  Icon="AppIcon" 
+                  IconIndex="0" />
+        <RegistryValue Root="HKCU" Key="Software\EldenRingSaveBackup" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="Elden Ring Save Backup Tool" Level="1">
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="ConfigFiles" />
+      <ComponentRef Id="AppFiles" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="StartMenuShortcut" />
+      <ComponentRef Id="ProgramMenuDir" />
+    </Feature>
+
+    <!-- UI Configuration -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+  </Product>
+</Wix>

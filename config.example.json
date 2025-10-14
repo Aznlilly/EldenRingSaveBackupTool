@@ -1,0 +1,11 @@
+{
+    "GameExecutable": "",
+    "SaveFilePath": "C:\\Users\\YourUsername\\AppData\\Roaming\\EldenRing\\ER0000.sl2",
+    "BackupFolder": "C:\\Users\\YourUsername\\Documents\\EldenRingBackups",
+    "MaxBackups": 50,
+    "MonitorMode": "FileChange",
+    "TimerInterval": 300,
+    "LaunchArguments": "",
+    "Language": "en",
+    "IsRunning": false
+}

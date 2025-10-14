@@ -1,0 +1,11 @@
+{
+  "GameExecutable": "",
+  "TimerInterval": 300,
+  "MonitorMode": "FileChange",
+  "BackupFolder": "",
+  "Language": "en",
+  "MaxBackups": 50,
+  "SaveFilePath": "",
+  "LaunchArguments": "",
+  "IsRunning": false
+}
